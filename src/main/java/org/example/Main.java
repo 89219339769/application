@@ -9,20 +9,18 @@ import java.util.*;
 
 public class Main {
 
-    List<String>res = new ArrayList<>();
-
     private static final String input = "resources/input.txt";
 
     public static void main(String[] args) throws IOException {
 
         Writer fileWriter = new FileWriter("resources/output.txt");
 
-        List<String>res = new ArrayList<>();
+        List<String> res = new ArrayList<>();
         for (String[] erey : compareItems()) {
             res.add(Arrays.toString(erey));
         }
 
-        for (String item: res) {
+        for (String item : res) {
             fileWriter.write(item);
             fileWriter.write("\n");
         }
@@ -39,19 +37,16 @@ public class Main {
         }
     }
 
-
     public static String getInput() {
         String temple = Main.readFileContentsOrNull(input);
         return temple;
     }
-
 
     public static String[] join(String[] a, String[] b) {
         String[] result = Arrays.copyOf(a, a.length + b.length);
         System.arraycopy(b, 0, result, a.length, b.length);
         return result;
     }
-
 
     public static List<String[]> compareItems() {
 
@@ -63,7 +58,6 @@ public class Main {
         for (int i = 1; i < parseInt + 1; i++) {
             firstPart.add(itemNames[i]);
         }
-        System.out.println(firstPart);
 
         List<String[]> result = new ArrayList<>();
         List<String[]> itemsArreysF = new ArrayList<>();
@@ -76,7 +70,6 @@ public class Main {
         for (int i = parseInt + 1; i < itemNames.length; i++) {
             secondPart.add(itemNames[i]);
         }
-        System.out.println(secondPart);
 
         List<String[]> itemsArreysS = new ArrayList<>();
         for (String itemFirst : secondPart) {
@@ -90,11 +83,11 @@ public class Main {
                 Set<String> items = new HashSet<>(Arrays.asList(common));
                 if (common.length != items.size()) {
                     if (!result.contains(erey))
-                    result.add(erey);
+                        result.add(erey);
                     String[] q = {":"};
                     result.add(q);
                     if (!result.contains(itemsArreysS.get(i)))
-                    result.add(itemsArreysS.get(i));
+                        result.add(itemsArreysS.get(i));
                 } else {
                     if (!result.contains(erey)) {
                         result.add(erey);
@@ -104,23 +97,6 @@ public class Main {
             }
         }
 
-        System.out.println(result);
-
-
-
         return result;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
