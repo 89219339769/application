@@ -1,18 +1,32 @@
 package org.example;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
 public class Main {
 
+    List<String>res = new ArrayList<>();
 
     private static final String input = "resources/input.txt";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        System.out.println(compareItems());
+        Writer fileWriter = new FileWriter("resources/output.txt");
+
+        List<String>res = new ArrayList<>();
+        for (String[] erey : compareItems()) {
+            res.add(Arrays.toString(erey));
+        }
+
+        for (String item: res) {
+            fileWriter.write(item);
+            fileWriter.write("\n");
+        }
+        fileWriter.close();
     }
 
 
@@ -25,7 +39,6 @@ public class Main {
         }
     }
 
-    Outpoot input2 = new Outpoot();
 
     public static String getInput() {
         String temple = Main.readFileContentsOrNull(input);
@@ -36,103 +49,78 @@ public class Main {
     public static String[] join(String[] a, String[] b) {
         String[] result = Arrays.copyOf(a, a.length + b.length);
         System.arraycopy(b, 0, result, a.length, b.length);
-
         return result;
     }
 
 
-    public static String compareItems() {
+    public static List<String[]> compareItems() {
 
         String[] itemNames = getInput().split("\\n");
         String number = itemNames[0];
-
         int parseInt = Integer.parseInt(number);
         List<String> firstPart = new ArrayList<>();
 
-        for (int i = 0; i < parseInt + 1; i++) {
+        for (int i = 1; i < parseInt + 1; i++) {
             firstPart.add(itemNames[i]);
         }
         System.out.println(firstPart);
 
-        /////////////первая часть готова
-        /////////////теперь нужно сделать массив из нее
-
         List<String[]> result = new ArrayList<>();
         List<String[]> itemsArreysF = new ArrayList<>();
         for (String itemFirst : firstPart) {
-
             itemsArreysF.add(itemFirst.split("\\s"));
-
         }
 
-
         List<String> secondPart = new ArrayList<>();
-        List<String> resultItems = new ArrayList<>();
-
 
         for (int i = parseInt + 1; i < itemNames.length; i++) {
             secondPart.add(itemNames[i]);
         }
         System.out.println(secondPart);
 
-
-        /////////////вторая часть готова
-        /////////////теперь нужно сделать массив из нее
-
         List<String[]> itemsArreysS = new ArrayList<>();
         for (String itemFirst : secondPart) {
-
             itemsArreysS.add(itemFirst.split("\\s"));
-
         }
 
-
         for (String[] erey : itemsArreysF) {
-
             for (int i = 0; i < itemsArreysS.size(); i++) {
 
                 String[] common = join(erey, itemsArreysS.get(i));
                 Set<String> items = new HashSet<>(Arrays.asList(common));
                 if (common.length != items.size()) {
+                    if (!result.contains(erey))
                     result.add(erey);
+                    String[] q = {":"};
+                    result.add(q);
+                    if (!result.contains(itemsArreysS.get(i)))
                     result.add(itemsArreysS.get(i));
+                } else {
+                    if (!result.contains(erey)) {
+                        result.add(erey);
+
+                    }
                 }
-               // result.add(erey);
             }
-
-
         }
 
-        System.out.println( result);
+        System.out.println(result);
 
 
-        return null;
+
+        return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
-
-///два списка с массивами готова
-
-
-//            String substring = item;
-//            String[] substrings = substring.split("\\s");
-//
-//            for (int i = 0; i < secondPart.size(); i++) {
-//                String substringSecond = secondPart.get(i);
-//                String[] substringsSeconds = substringSecond.split("\\s");
-//
-//                for (int j = 0; j < substrings.length; j++) {
-//                    for (int k = 0; k < substringsSeconds.length; k++) {
-//                        if (substrings[i].equals(substringsSeconds[j])) {
-//                            itemsResembling = true;
-//                        }
-//                    }
-//                }
-//if (itemsResembling = true)
-//                resultItems.add(item+":"+substringSecond);
-//            }
-//
-//
-//        }
-//
-//
-//        System.out.println(resultItems);
